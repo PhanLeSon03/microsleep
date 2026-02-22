@@ -80,9 +80,19 @@ Shape: (32, 2*(21+8)): sequence, feature
 ---
 
 ### Performance
-
 Cohen’s Kappa ≈ **0.67** (published model CNN_LSTM: 0.65 [1])
+```
+              precision    recall  f1-score   support
 
+         0.0       0.97      0.97      0.97     38082
+         1.0       0.70      0.71      0.70      3582
+
+    accuracy                           0.95     41664
+   macro avg       0.83      0.84      0.84     41664
+weighted avg       0.95      0.95      0.95     41664
+
+computes Cohen kappa per class: [0.67459876 0.67459876]
+```
 ---
 
 ## Model 2: STFT + Raw Waveform (Learned Match Filters)
