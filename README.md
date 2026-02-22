@@ -1,4 +1,4 @@
-# 🧠 Automatic Microsleep Detection using Wearable EEG
+# Automatic Microsleep Detection
 
 Deep learning framework for **automatic microsleep episode (MSE) detection** using EEG signals.
 
@@ -7,8 +7,25 @@ This repository implements **two dual-input neural network architectures**:
 1. **STFT + Hand-Crafted Features**
 2. **STFT + Raw Waveform (Learned Match Filters)**
 
-**Best Result:**  
-> **Cohen’s Kappa = 0.67**
+
+### Download the dataset (https://zenodo.org/record/3251716)
+```
+bash download.sh
+```
+
+### Generate Tensorflow IO file
+```
+python TFRecord_gen_feature.py
+```
+
+###  Training
+```
+python 2In_TF_CNN_LSTM.py
+```
+or 
+```
+python TF_CNN_W.py
+```
 
 ---
 
@@ -33,14 +50,6 @@ Channels used:
 - O1-M1
 - O2-M2
 - EOG (LOC, ROC)
-
-Future extensions:
-- 32-channel EEG
-- fNIRS
-- PPG
-- Accelerometer
-- Custom ADS1299 wearable system
-
 ---
 
 # 3. Model Architectures
@@ -55,6 +64,7 @@ Future extensions:
 - Channel-wise normalization
 - Hop size: 32 (160 ms)
 - FFT window: 128 (640 ms)
+
 Shape: (128, 65, 4): sequence, SFTF, channel 
 
 ---
@@ -72,6 +82,7 @@ Computed per window:640 ms
 - Slow eye movement energy
 - Blink amplitude
 - Low-frequency power
+
 Shape: (32, 2*(21+8)): sequence, feature
 
 ### Output: 
@@ -119,8 +130,20 @@ Shape: (32, 400, 4) : sequence, sample, channel
 
 ### Performance
 
-Cohen’s Kappa ≈ **0.67**
+Cohen’s Kappa ≈ **0.66**
+```
+              precision    recall  f1-score   support
 
+         0.0       0.99      0.94      0.96     76132
+         1.0       0.59      0.86      0.70      7164
+
+    accuracy                           0.94     83296
+   macro avg       0.79      0.90      0.83     83296
+weighted avg       0.95      0.94      0.94     83296
+
+computes Cohen kappa per class
+[0.66121442 0.66121442]
+```
 ---
 
 [1] https://github.com/alexander-malafeev/microsleep-detection.git
